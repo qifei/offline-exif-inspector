@@ -3,7 +3,8 @@
 
 #### Project Structure
 
-local-exif-inspector/
+```text
+project-root/
 │
 ├── index.html
 ├── style.css
