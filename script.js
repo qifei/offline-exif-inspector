@@ -7,7 +7,22 @@ const tabButtons = document.querySelectorAll(".tab-btn");
 const tabContents = document.querySelectorAll(".tab-content");
 
 function getTag(tags, key) {
-  return tags[key]?.description || "N/A";
+  // return tags[key]?.description || "N/A";
+
+  if (typeof(key) === "string") {
+    return tags[key]?.description || tags[key] || "N/A";
+  }
+
+  if (Array.isArray(key)) {
+    for (let i = 0; i < key.length; i++) {
+      let k = key[i];
+      let v = tags[k]?.description || tags[k];
+      if (v!=null && v!=undefined) {
+        return v;
+      }
+    }
+  }
+  return "N/A";
 }
 
 function formatFileSize(bytes) {
@@ -57,8 +72,8 @@ function buildRawJson(tags, index, fileName, file) {
 
 function buildCard(file, tags, index, fileName) {
   const date = getTag(tags, "DateTimeOriginal");
-  const width = getTag(tags, "Image Width");
-  const height = getTag(tags, "Image Height");
+  const width = getTag(tags, ["Image Width", "PixelXDimension", "ExifImageWidth"]);
+  const height = getTag(tags, ["Image Height", "PixelYDimension", "ExifImageHeight"]);
   const maker = getTag(tags, "Make");
   const model = getTag(tags, "Model");
 
@@ -68,8 +83,8 @@ function buildCard(file, tags, index, fileName) {
 
   const metering = getTag(tags, "MeteringMode");
   const exifVersion = getTag(tags, "ExifVersion");
-  const exposureBias = getTag(tags, "ExposureBiasValue");
-  const iso = getTag(tags, "ISO Speed Ratings");
+  const exposureBias = getTag(tags, ["ExposureBiasValue", "ExposureCompensation"]);
+  const iso = getTag(tags, "ISO Speed Ratings") === "N/A" ? getTag(tags, "ISOSpeedRatings") : getTag(tags, "ISO Speed Ratings");
   const exposureTime = getTag(tags, "ExposureTime");
   const aperture = getTag(tags, "FNumber");
 
@@ -132,7 +147,7 @@ async function readFiles(event) {
     const buffer = await file.arrayBuffer();
 
     try {
-      const tags = ExifReader.load(buffer);
+      const tags = ExifReader.load(buffer); //await exifr.parse(buffer, opts);
 
       previewContainer.innerHTML += createPreview(file, file.name);
       result.innerHTML += buildCard(file, tags, i, file.name);

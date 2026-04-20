@@ -53,7 +53,7 @@ input[type="file"] {
 
 .tabs {
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   margin-bottom: 20px;
 }
 
@@ -174,8 +174,8 @@ textarea {
   display: grid;
   place-items: center;
   padding: 18px;
-  background: rgba(244, 239, 231, .78);
-  backdrop-filter: blur(12px);
+  background: rgba(242, 239, 233, 0.68);
+  backdrop-filter: blur(8px);
   opacity: 0;
   pointer-events: none;
   transition: opacity .16s ease;
@@ -191,9 +191,9 @@ body.fileDropActive .pageDropOverlay {
   max-width: 25rem;
   width: min(100%, 420px);
   border-radius: 1rem;
-  border: 1px solid rgba(88, 88, 88, .22);
-  background: rgba(255,255,255,.94);
-  box-shadow: 0 24px 60px rgba(102, 93, 75, .18);
+  border: 1px solid rgb(255, 255, 255);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
   padding: 22px 20px;
   text-align: center;
   visibility: visible;
