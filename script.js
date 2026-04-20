@@ -84,7 +84,7 @@ function buildCard(file, tags, index, fileName) {
   const metering = getTag(tags, "MeteringMode");
   const exifVersion = getTag(tags, "ExifVersion");
   const exposureBias = getTag(tags, ["ExposureBiasValue", "ExposureCompensation"]);
-  const iso = getTag(tags, "ISO Speed Ratings") === "N/A" ? getTag(tags, "ISOSpeedRatings") : getTag(tags, "ISO Speed Ratings");
+  const iso = getTag(tags, ["ISO Speed Ratings", "ISOSpeedRatings"]);
   const exposureTime = getTag(tags, "ExposureTime");
   const aperture = getTag(tags, "FNumber");
 
